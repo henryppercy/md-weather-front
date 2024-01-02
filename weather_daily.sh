@@ -21,6 +21,8 @@ log_error() {
   echo -e "${RED}[ERROR]${NC} $(date '+%Y-%m-%d %H:%M:%S') - $1"
 }
 
+APP_ID=$1
+
 year_dir=$(date +"%Y")
 month_num=$(date +"%m")
 month_str=$(date +"%B")
@@ -35,7 +37,7 @@ if ! [ -e $todays_path ]; then
 fi
 log_info "Editing the frontmatter within $todays_path"
 
-response=$(curl -f -sS -connect-timeout 10 --max-time 30 "https://api.openweathermap.org/data/3.0/onecall")
+response=$(curl -f -sS -connect-timeout 10 --max-time 30 "https://api.openweathermap.org/data/3.0/onecall?lat=51.5072&lon=0.1276&units=metric&appid=$APP_ID")
 exit_status=$?
 
 if ! [ $exit_status -eq 0 ]; then
