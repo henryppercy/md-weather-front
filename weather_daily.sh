@@ -29,7 +29,7 @@ month_str=$(date +"%B")
 month_dir="$month_num-$month_str"
 iso_date_dir=$(date +"%F")
 
-todays_path="$HOME/Documents/Obsidian/Timestamps/$year_dir/$month_dir/$iso_date_dir.md"
+todays_path="$HOME/Obsidian/Obsidian/Timestamps/$year_dir/$month_dir/$iso_date_dir.md"
 
 if ! [ -e $todays_path ]; then
   log_warn "Today's daily note does not yet exist: $todays_path"
@@ -47,19 +47,19 @@ fi
 
 log_success "Weather data retrieved successfully"
 
-weather_data=$(echo $response | jq -r '.daily[0] | {temperature: .temp.day, weather: .weather[0].main, sunrise: .sunrise, sunset: .sunset}')
+weather_data=$(echo $response | /opt/homebrew/bin/jq -r '.daily[0] | {temperature: .temp.day, weather: .weather[0].main, sunrise: .sunrise, sunset: .sunset}')
 
-temperature=$(echo $weather_data | jq -r .temperature)
-weather=$(echo $weather_data | jq -r '.weather' | tr '[:upper:]' '[:lower:]')
-sunset=$(echo $weather_data | jq -r .sunset)
-sunrise=$(echo $weather_data | jq -r .sunrise)
+temperature=$(echo $weather_data | /opt/homebrew/bin/jq -r .temperature)
+weather=$(echo $weather_data | /opt/homebrew/bin/jq -r '.weather' | tr '[:upper:]' '[:lower:]')
+sunset=$(echo $weather_data | /opt/homebrew/bin/jq -r .sunset)
+sunrise=$(echo $weather_data | /opt/homebrew/bin/jq -r .sunrise)
 
 readable_sunset=$(date -r "$sunset" '+%F %T')
 readable_sunrise=$(date -r "$sunrise" '+%F %T')
 
 update_yaml() {
   local key=$1 value=$2 path=$3
-  sed -i '' "/^---$/,/^---$/{/^$key: /s/:.*/: $value/;}" "$path"
+  /usr/bin/sed -i '' "/^---$/,/^---$/{/^$key: /s/:.*/: $value/;}" "$path"
 }
 
 update_yaml "temperature" "$temperature" "$todays_path"
