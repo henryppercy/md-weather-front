@@ -29,7 +29,7 @@ month_str=$(date +"%B")
 month_dir="$month_num-$month_str"
 iso_date_dir=$(date +"%F")
 
-todays_path="$HOME/Obsidian/Obsidian/Timestamps/$year_dir/$month_dir/$iso_date_dir.md"
+todays_path="$HOME/Obsidian/Obsidian/Timestamps/Work/$year_dir/$month_dir/$iso_date_dir.md"
 
 if ! [ -e $todays_path ]; then
   log_warn "Today's daily note does not yet exist: $todays_path"
@@ -37,7 +37,7 @@ if ! [ -e $todays_path ]; then
 fi
 log_info "Editing the frontmatter within $todays_path"
 
-response=$(curl -f -sS -connect-timeout 10 --max-time 30 "https://api.openweathermap.org/data/3.0/onecall?lat=51.5072&lon=0.1276&units=metric&appid=$APP_ID")
+response=$(curl -f -sS -connect-timeout 10 --max-time 30 "https://api.openweathermap.org/data/3.0/onecall?lat=51.4659&lon=0.1413&units=metric&appid=$APP_ID")
 exit_status=$?
 
 if ! [ $exit_status -eq 0 ]; then
